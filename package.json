@@ -1,0 +1,15 @@
+{
+  "name": "nan-async-worker-example",
+  "version": "1.0.0",
+  "description": "A example code of using Nan::AsyncWorker",
+  "main": "index.js",
+  "scripts": {
+    "configure": "./node_modules/.bin/node-gyp configure",
+    "build": "./node_modules/.bin/node-gyp build"
+  },
+  "author": "DavidCai1993",
+  "license": "MIT",
+  "devDependencies": {
+    "nan": "^2.3.5"
+  }
+}
