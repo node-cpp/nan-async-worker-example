@@ -6,23 +6,26 @@ using namespace v8;
 using std::string;
 
 class Work {
+friend void WorkAsync (uv_work_t*);
+friend void WorkAsyncComplete (uv_work_t*, int);
 public:
   Work() = default;
   ~Work() = default;
 
   uv_work_t request;
   Persistent<Function> callback;
+private:
   string data = "";
 };
 
-static void WorkAsync (uv_work_t *request) {
+void WorkAsync (uv_work_t *request) {
   Work* work = static_cast<Work*>(request->data);
 
   work->data = "done";
   sleep(3);
 }
 
-static void WorkAsyncComplete (uv_work_t *request, int status) {
+void WorkAsyncComplete (uv_work_t *request, int status) {
   Nan::HandleScope scope;
   Work* work = static_cast<Work*>(request->data);
 
@@ -34,7 +37,7 @@ static void WorkAsyncComplete (uv_work_t *request, int status) {
   delete work;
 }
 
-void MethodAsync (const FunctionCallbackInfo<Value>& info) {
+NAN_METHOD (MethodAsync) {
   Isolate* isolate = info.GetIsolate();
   Work* work = new Work();
   work->request.data = work;
