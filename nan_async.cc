@@ -26,7 +26,7 @@ void Work::Execute () {
 void Work::HandleOKCallback () {
   Nan::HandleScope scope;
   Local<Value> argv[] = { Nan::New<String>(this->data).ToLocalChecked() };
-  this->callback->Call(1, argv);
+  this->callback->Call(1, argv, this->async_resource);
 }
 
 NAN_METHOD (MethodAsync) {
